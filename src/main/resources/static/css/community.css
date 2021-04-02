@@ -3,6 +3,7 @@ body{
 }
 
 .main{
+    background-color: white;
     margin: 30px;
 }
 
@@ -20,4 +21,13 @@ body{
     font-size: 12px;
     font-weight: normal;
     color: #999;
+}
+
+.profile .section{
+    margin-top: 15px;
+}
+
+.community-menu{
+    color: #999;
+    font-size: 13px;
 }

@@ -1,8 +1,8 @@
 package life.littleliu.community.controller;
 
-import life.littleliu.community.dto.CommentCreateDTO;
 import life.littleliu.community.dto.CommentDTO;
 import life.littleliu.community.dto.QuestionDTO;
+import life.littleliu.community.enums.CommentTypeEnum;
 import life.littleliu.community.service.CommentService;
 import life.littleliu.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,13 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Long id, Model model) {
         QuestionDTO questionDTO = questionService.getById(id);
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question", questionDTO);
         model.addAttribute("comments", comments);
+        model.addAttribute("relatedQuestions", relatedQuestions);
         return "question";
     }
 }
